@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CORE BORN — Limited edition art toys at the intersection of fine art, street culture, and craftsmanship. First drop coming 2026.">
+  <meta property="og:title" content="CORE BORN">
+  <meta property="og:description" content="Limited edition art toys. First drop coming 2026.">
+  <meta property="og:type" content="website">
+  <title>CORE BORN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&family=Roboto:wght@900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #000;
+      --white: #fff;
+      --gray: #888;
+      --gray-dark: #1a1a1a;
+      --accent: #e63030;
+      --header-h: 60px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+
+    /* ── INTRO ── */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    #intro.done {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    #intro-robot {
+      width: min(65vw, 380px);
+      height: auto;
+      transform: scale(4);
+      opacity: 0;
+      will-change: transform, opacity;
+      animation: robotZoomOut 2.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+
+    @keyframes robotZoomOut {
+      0%   { transform: scale(4);    opacity: 0; }
+      15%  { opacity: 1; }
+      80%  { transform: scale(1);    opacity: 1; }
+      100% { transform: scale(0.85); opacity: 0; }
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      height: var(--header-h);
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.3s ease;
+    }
+
+    .logo {
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      /* Larger touch target */
+      padding: 12px 0;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav { display: flex; gap: 4px; }
+
+    nav a {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray);
+      /* Minimum 44px touch target */
+      padding: 14px 12px;
+      border-radius: 6px;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    nav a:hover  { color: var(--white); }
+    nav a:active { background: rgba(255,255,255,0.06); color: var(--white); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: calc(var(--header-h) + 40px) 20px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-logo {
+      width: min(90vw, 780px);
+      opacity: 0;
+      will-change: opacity, transform;
+      animation: fadeUp 1s ease 2.8s forwards;
+    }
+
+    .hero-logo img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .hero-tagline {
+      margin-top: 28px;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray);
+      opacity: 0;
+      animation: fadeUp 1s ease 3.1s forwards;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      animation: fadeUp 1s ease 3.5s forwards;
+    }
+
+    .scroll-hint span {
+      font-size: 8px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 28px;
+      background: linear-gradient(to bottom, var(--gray), transparent);
+      animation: pulse 2s ease infinite;
+    }
+
+    /* ── 3D VIEWER ── */
+    .viewer-section {
+      padding: 0 16px 80px;
+      scroll-margin-top: var(--header-h);
+    }
+
+    .viewer-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .viewer-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .coming-soon {
+      text-align: center;
+      font-family: 'Roboto', sans-serif;
+      font-size: clamp(36px, 10vw, 88px);
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+      background: linear-gradient(
+        160deg,
+        #ffffff 0%,
+        #c8c8c8 10%,
+        #ffffff 20%,
+        #909090 30%,
+        #ffffff 42%,
+        #d0d0d0 50%,
+        #ffffff 58%,
+        #a0a0a0 68%,
+        #ffffff 78%,
+        #c0c0c0 88%,
+        #ffffff 100%
+      );
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.6)) drop-shadow(0 0 20px rgba(255,255,255,0.3));
+      animation: silverShine 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes silverShine {
+      0%   { background-position: 0% center; }
+      100% { background-position: 250% center; }
+    }
+
+    .viewer-box {
+      aspect-ratio: 1 / 1;
+      background: #fff;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      /* Prevent text selection while rotating */
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: none;
+    }
+
+    .viewer-box canvas {
+      display: block;
+      border-radius: 16px;
+      touch-action: none;
+    }
+
+    .viewer-corner {
+      position: absolute;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      color: #aaa;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .viewer-corner.tl { top: 14px; left: 14px; }
+    .viewer-corner.tr { top: 14px; right: 14px; }
+    .viewer-corner.bl { bottom: 28px; left: 14px; }
+    .viewer-corner.br { bottom: 28px; right: 14px; }
+
+    .viewer-hint {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #aaa;
+      z-index: 2;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+      white-space: nowrap;
+    }
+
+    .viewer-hint.hidden { opacity: 0; }
+
+    .viewer-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      z-index: 3;
+      border-radius: 16px;
+      transition: opacity 0.6s ease;
+    }
+
+    .viewer-loading.done { opacity: 0; pointer-events: none; }
+
+    .viewer-error {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .viewer-error.show { display: flex; }
+
+    .loader-ring {
+      width: 28px; height: 28px;
+      border: 2px solid #e0e0e0;
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .loader-text {
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #999;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: 80px 24px;
+      text-align: center;
+      scroll-margin-top: var(--header-h);
+    }
+
+    .about-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .about h2 {
+      font-size: clamp(26px, 6vw, 40px);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .about p {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--gray);
+      max-width: 460px;
+      margin: 0 auto;
+    }
+
+    /* ── SOCIAL STRIP ── */
+    .social-strip {
+      padding: 48px 24px;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray);
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    .social-btn:hover  { border-color: var(--white); color: var(--white); }
+    .social-btn:active { background: rgba(255,255,255,0.06); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 20px;
+      border-top: 1px solid var(--gray-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 5px;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-copy {
+      font-size: 10px;
+      color: #444;
+      letter-spacing: 1px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; }
+      50%       { opacity: 1; }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── DESKTOP ── */
+    @media (min-width: 769px) {
+      :root { --header-h: 64px; }
+
+      header { padding: 0 48px; }
+
+      .logo { font-size: 18px; }
+
+      nav { gap: 8px; }
+
+      nav a { font-size: 11px; letter-spacing: 3px; }
+
+      .viewer-section { padding: 0 48px 120px; }
+
+      .viewer-box { aspect-ratio: 4 / 3; }
+
+      .about { padding: 120px 48px; }
+
+      .social-strip { padding: 60px 48px; gap: 20px; }
+
+      footer {
+        padding: 40px 48px 32px;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Intro -->
+  <div id="intro" role="presentation" aria-hidden="true">
+    <img id="intro-robot" src="intro-robot.png" alt="" loading="eager">
+  </div>
+
+  <!-- Header -->
+  <header>
+    <a href="#" class="logo" aria-label="CORE BORN — Home">CORE<span>.</span>BORN</a>
+    <nav aria-label="Main navigation">
+      <a href="#about">About</a>
+      <a href="#viewer">The Toy</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" aria-label="Hero">
+    <div class="hero-logo">
+      <img src="logo.png" alt="CORE BORN" loading="eager" width="780" height="400">
+    </div>
+    <p class="hero-tagline">First Drop — Coming Soon</p>
+    <div class="scroll-hint" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- 3D Viewer -->
+  <section class="viewer-section reveal" id="viewer" aria-label="3D toy viewer">
+    <div class="viewer-wrap">
+      <h2 class="coming-soon">COMING SOON...</h2>
+      <p class="viewer-label">001 — Limited Edition</p>
+      <div class="viewer-box" id="viewerBox" role="img" aria-label="Interactive 3D model of the CORE BORN art toy">
+        <span class="viewer-corner tl">CORE BORN</span>
+        <span class="viewer-corner tr">2026</span>
+        <span class="viewer-corner bl">LTD</span>
+        <span class="viewer-corner br">001</span>
+        <div class="viewer-loading" id="viewerLoading" aria-live="polite">
+          <div class="loader-ring" aria-hidden="true"></div>
+          <span class="loader-text" id="loaderText">Loading</span>
+          <div class="viewer-error" id="viewerError">
+            <span class="loader-text">Failed to load model</span>
+          </div>
+        </div>
+        <span class="viewer-hint" id="viewerHint" aria-hidden="true">Drag to rotate</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about reveal" id="about" aria-label="About CORE BORN">
+    <p class="about-label">The Vision</p>
+    <h2>Born from the core.</h2>
+    <p>CORE BORN is an art toy brand where every piece carries a story, a personality, a soul. Designed at the intersection of fine art, street culture, and craftsmanship.</p>
+    <p style="margin-top: 28px; font-size: 15px; font-weight: 300; line-height: 1.9; color: #888; max-width: 460px; margin-left: auto; margin-right: auto;">Behind every piece is <strong style="color: #fff; font-weight: 600;">Serdar Khydyrov</strong> — the sole creator of CORE BORN. Each art toy is conceived, sculpted, and finished entirely by hand. No shortcuts, no mass production.</p>
+  </section>
+
+  <!-- Social -->
+  <div class="social-strip reveal">
+    <a class="social-btn" href="https://www.instagram.com/core_born/?hl=en" target="_blank" rel="noopener noreferrer" aria-label="CORE BORN on Instagram">Instagram</a>
+    <a class="social-btn" href="https://www.tiktok.com/@core_born?_r=1&_t=ZP-95IWcG9aMzG" target="_blank" rel="noopener noreferrer" aria-label="CORE BORN on TikTok">TikTok</a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">CORE<span>.</span>BORN</div>
+    <div class="footer-copy">&copy; 2026 CORE BORN</div>
+  </footer>
+
+  <!-- Three.js (with SRI integrity) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js" crossorigin="anonymous"></script>
+
+  <script>
+    // ── Scroll to top on load ──
+    if (history.scrollRestoration) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+
+    // ── Intro ──
+    const introEl = document.getElementById('intro');
+    setTimeout(() => {
+      introEl.classList.add('done');
+      setTimeout(() => { introEl.style.display = 'none'; }, 600);
+    }, 2800);
+
+    // ── Touch detection for viewer hint ──
+    const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+
+    // ── 3D Viewer ──
+    (function() {
+      const container = document.getElementById('viewerBox');
+      const loadingEl = document.getElementById('viewerLoading');
+      const loaderText = document.getElementById('loaderText');
+      const errorEl   = document.getElementById('viewerError');
+      const hintEl    = document.getElementById('viewerHint');
+
+      if (isTouch) hintEl.textContent = 'Swipe to rotate';
+
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xffffff);
+
+      let w = container.clientWidth;
+      let h = container.clientHeight;
+      const camera = new THREE.PerspectiveCamera(35, w / h, 0.1, 10000);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'low-power' });
+      renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // Lights
+      scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+      const key = new THREE.DirectionalLight(0xffffff, 0.8);
+      key.position.set(5, 10, 7);
+      scene.add(key);
+      const fill = new THREE.DirectionalLight(0xffffff, 0.3);
+      fill.position.set(-5, 5, -5);
+      scene.add(fill);
+      const rim = new THREE.DirectionalLight(0xffffff, 0.4);
+      rim.position.set(0, -3, -8);
+      scene.add(rim);
+
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.06;
+      controls.enablePan = false;
+      controls.minDistance = 50;
+      controls.maxDistance = 2000;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = 1.5;
+      controls.addEventListener('start', () => hintEl.classList.add('hidden'));
+
+      // Pause render when not visible — saves battery on mobile
+      let visible = false;
+      const visObs = new IntersectionObserver(entries => {
+        visible = entries[0].isIntersecting;
+      }, { threshold: 0.1 });
+      visObs.observe(container);
+
+      // Decryption key
+      const KEY = new Uint8Array([176,113,73,154,157,119,114,69,206,120,27,113,165,9,181,66,176,64,161,201,129,134,88,50,107,134,255,241,157,48,15,118,107,45,189,26,101,97,137,104,131,2,103,66,178,9,146,47,23,95,92,252,19,71,198,79,105,131,247,2,10,166,229,245,195,52,197,169,232,217,22,223,174,143,136,126,218,45,121,7,225,210,177,205,243,155,62,153,150,150,232,26,60,245,135,215,161,180,12,234,12,76,214,225,3,105,30,101,208,47,101,106,90,144,30,122,216,58,90,12,147,42,154,90,56,120,104,198,49,168,29,65,52,138,172,44,166,175,254,223,73,27,116,138,38,112,248,250,211,82,77,242,177,132,188,232,0,246,241,128,159,231,10,25,30,53,81,25,12,69,96,103,83,252,181,115,53,171,21,218,223,241,109,108,251,153,245,27,236,231,64,217,159,194,131,63,58,26,242,5,149,193,246,236,236,226,151,29,179,82,109,62,167,134,181,219,22,227,144,40,98,6,161,82,7,116,37,158,204,20,157,201,55,177,70,108,130,108,89,154,166,139,209,113,214,153,66,175,163,171,130,69,166,180,60,35]);
+
+      fetch('model.bin')
+        .then(r => {
+          if (!r.ok) throw new Error('Network error');
+          return r.arrayBuffer();
+        })
+        .then(buf => {
+          loaderText.textContent = 'Decoding...';
+          // Decrypt in chunks to avoid blocking the main thread too long
+          const enc = new Uint8Array(buf);
+          for (let i = 0; i < enc.length; i++) enc[i] ^= KEY[i % 256];
+          const loader = new THREE.STLLoader();
+          const geometry = loader.parse(enc.buffer);
+          onGeometryLoaded(geometry);
+        })
+        .catch(() => {
+          document.querySelector('.loader-ring').style.display = 'none';
+          loaderText.style.display = 'none';
+          errorEl.classList.add('show');
+        });
+
+      function onGeometryLoaded(geometry) {
+        geometry.computeVertexNormals();
+        const mat  = new THREE.MeshStandardMaterial({ color: 0x0a0a0a, roughness: 0.4, metalness: 0.1 });
+        const mesh = new THREE.Mesh(geometry, mat);
+
+        geometry.applyMatrix4(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
+        geometry.computeBoundingBox();
+
+        const bbox   = geometry.boundingBox;
+        const center = new THREE.Vector3();
+        const size   = new THREE.Vector3();
+        bbox.getCenter(center);
+        bbox.getSize(size);
+        geometry.translate(-center.x, -center.y, -center.z);
+
+        const scale = 200 / Math.max(size.x, size.y, size.z);
+        mesh.scale.set(scale, scale, scale);
+        scene.add(mesh);
+
+        camera.position.set(0, 30, 380);
+        controls.target.set(0, 0, 0);
+        controls.update();
+        loadingEl.classList.add('done');
+      }
+
+      let rafId;
+      (function animate() {
+        rafId = requestAnimationFrame(animate);
+        if (!visible) return;
+        controls.update();
+        renderer.render(scene, camera);
+      })();
+
+      // Debounced resize
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          w = container.clientWidth;
+          h = container.clientHeight;
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h);
+        }, 100);
+      });
+    })();
+
+    // ── Scroll reveal ──
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+  </script>
+
+</body>
+</html>
