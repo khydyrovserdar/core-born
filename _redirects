@@ -1,1 +1,1 @@
-/chunks/* https://github.com/khydyrovserdar/core-born/releases/download/v1.0/:splat 200
+# Edge function handles /chunks/* proxy — see netlify.toml
