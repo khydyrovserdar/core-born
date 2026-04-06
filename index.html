@@ -161,32 +161,6 @@
       animation: fadeUp 1s ease 3.1s forwards;
     }
 
-    .scroll-hint {
-      position: absolute;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      opacity: 0;
-      animation: fadeUp 1s ease 3.5s forwards;
-    }
-
-    .scroll-hint span {
-      font-size: 8px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gray);
-    }
-
-    .scroll-line {
-      width: 1px;
-      height: 28px;
-      background: linear-gradient(to bottom, var(--gray), transparent);
-      animation: pulse 2s ease infinite;
-    }
 
     /* ── 3D VIEWER ── */
     .viewer-section {
@@ -494,10 +468,6 @@
       <img src="logo.png" alt="CORE BORN" loading="eager" width="780" height="400">
     </div>
     <p class="hero-tagline">First Drop — Coming Soon</p>
-    <div class="scroll-hint" aria-hidden="true">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
   </section>
 
   <!-- 3D Viewer -->
