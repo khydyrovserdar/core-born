@@ -1,5 +1,5 @@
 model.bin
-chunks/
+/chunks/
 
 # wrangler files
 .wrangler
