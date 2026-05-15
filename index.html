@@ -604,12 +604,33 @@
     document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
     // Waitlist form
-    document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+    document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const email = this.querySelector('input').value;
+      const input = this.querySelector('input');
+      const btn = this.querySelector('button');
+      const email = input.value.trim();
       if (!email || !email.includes('@')) return;
-      this.style.display = 'none';
-      document.getElementById('waitlistConfirm').classList.add('show');
+
+      btn.textContent = '...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        if (res.ok) {
+          this.style.display = 'none';
+          document.getElementById('waitlistConfirm').classList.add('show');
+        } else {
+          btn.textContent = 'Try again';
+          btn.disabled = false;
+        }
+      } catch {
+        btn.textContent = 'Try again';
+        btn.disabled = false;
+      }
     });
   </script>
 

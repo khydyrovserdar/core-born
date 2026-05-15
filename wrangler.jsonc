@@ -11,5 +11,12 @@
   },
   "compatibility_flags": [
     "nodejs_compat"
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "coreborn-waitlist",
+      "database_id": "2b0c340b-074c-4f25-8770-dc181126c822"
+    }
   ]
 }
