@@ -182,11 +182,10 @@
       font-family: 'Roboto Mono', monospace;
     }
     .photo-grid {
-      display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
       gap: 2px; max-width: 1100px; margin: 0 auto; padding: 0 2px;
     }
     .photo-item { position: relative; overflow: hidden; cursor: pointer; aspect-ratio: 3/4; }
-    .photo-item:first-child { grid-column: 1 / 3; grid-row: 1 / 3; aspect-ratio: auto; }
     .photo-item img {
       width: 100%; height: 100%; object-fit: cover; display: block;
       transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -296,7 +295,6 @@
 
     @media (max-width: 480px) {
       .photo-grid { grid-template-columns: 1fr 1fr; }
-      .photo-item:first-child { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 3/4; }
       .waitlist-form { flex-direction: column; }
       .waitlist-input { border-right: 1px solid var(--border); border-bottom: none; border-radius: 2px 2px 0 0; }
       .waitlist-btn { border-radius: 0 0 2px 2px; height: 48px; }
